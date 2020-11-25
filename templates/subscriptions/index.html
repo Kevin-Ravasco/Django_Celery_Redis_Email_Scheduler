@@ -1,0 +1,58 @@
+{% extends 'src/base.html' %}{% block content %}
+{% load static %}
+
+{% include 'src/messages.html' %}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Date Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for subscriber in subscribers %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ subscriber.email }}</td>
+                            <td>
+                                {% if subscriber.is_subscribed %}
+                                <span class="text-success">Subscribed</span>
+                                {% else %}
+                                <span class="text-danger"><strong>Not Subscribed</strong></span>
+                                {% endif %}
+                            </td>
+                            <td>{{ subscriber.timestamp }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="mb-4">Subscribe to our Newsletter!</h3>
+            <div class="">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>{{ form.email.label }}</label>
+                        {{ form.email }}
+                    </div>
+                    <button class="btn btn-primary" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}
